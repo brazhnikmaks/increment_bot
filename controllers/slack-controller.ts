@@ -47,7 +47,7 @@ class SlackController {
   async onMessage({ say, message }: any) {
     console.log({ say, message });
     try {
-      await say(message);
+      await say(message.text);
     } catch (error) {
       console.log("err");
       console.error(error);
