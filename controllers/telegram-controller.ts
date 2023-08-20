@@ -2,10 +2,12 @@ import { Message, MessageEntity } from "node-telegram-bot-api";
 import { config } from "dotenv";
 import bot from "../servises/telefram-service";
 import db from "../servises/mongo-service";
-import { FIRED_TEXT_MATCH_REGEX } from "../consts";
+import { FIRED_TEXT_REGEX } from "../consts";
 import type { IUserDto } from "../types/user";
 
 config();
+
+const TELEGRAM_USER_REGEXP = /@[\w]+/gim;
 
 class TelegramController {
   async sendError(chatId: number) {
@@ -44,7 +46,9 @@ class TelegramController {
         if (entry.type !== "mention") return users;
         const start = entry.offset + 1;
         const end = start + entry.length - 1;
-        users.push(text.substring(start, end));
+        const user = text.substring(start, end);
+        if (users.includes(user)) return users;
+        users.push(user);
         return users;
       }, []) ?? []
     );
@@ -63,7 +67,9 @@ class TelegramController {
     const { id: userId } = from;
 
     try {
-      const firedMatchText = text.match(FIRED_TEXT_MATCH_REGEX);
+      const firedMatchText = text
+        .replace(TELEGRAM_USER_REGEXP, "")
+        .match(FIRED_TEXT_REGEX);
       //no matched fired text - skip all
       if (!firedMatchText) return;
       //check if user is master

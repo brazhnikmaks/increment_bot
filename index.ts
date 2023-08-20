@@ -2,12 +2,13 @@ import telegramBot from "./servises/telefram-service";
 import TelegramController from "./controllers/telegram-controller";
 import slackBot from "./servises/slack-service";
 import SlackController from "./controllers/slack-controller";
-import { FIRED_TEXT_MATCH_REGEX } from "./consts";
+import { FIRED_TEXT_REGEX } from "./consts";
 
 telegramBot.on("message", TelegramController.onAction.bind(TelegramController));
 
 slackBot.start(3000);
 slackBot.message(
-  FIRED_TEXT_MATCH_REGEX,
+  FIRED_TEXT_REGEX,
+  // @ts-ignore
   SlackController.onMessage.bind(SlackController),
 );
