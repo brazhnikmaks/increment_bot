@@ -11,6 +11,7 @@ slackBot.message(
 
 const handler: Handler = async (event: HandlerEvent) => {
   const payload = JSON.parse(event.body!) as ReceiverEvent;
+  console.log({ payload });
 
   await slackBot.processEvent(payload);
 
