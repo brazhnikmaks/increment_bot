@@ -1,13 +1,18 @@
 import { Handler, HandlerEvent } from "@netlify/functions";
-// import { Message } from "node-telegram-bot-api";
-// import telegramController from "../../controllers/telegram-controller";
+import { ReceiverEvent } from "@slack/bolt";
+import slackBot from "../../servises/slack-service";
+import SlackController from "../../controllers/slack-controller";
+import { FIRED_TEXT_MATCH_REGEX } from "../../consts";
 
 const handler: Handler = async (event: HandlerEvent) => {
-  console.log(event.body);
-  const message = JSON.parse(event.body!);
-  console.log(message);
+  const payload = JSON.parse(event.body!) as ReceiverEvent;
 
-  // await telegramController.onAction.bind(telegramController)(message);
+  slackBot.message(
+    FIRED_TEXT_MATCH_REGEX,
+    SlackController.onMessage.bind(SlackController),
+  );
+
+  await slackBot.processEvent(payload);
 
   return { statusCode: 200 };
 };
