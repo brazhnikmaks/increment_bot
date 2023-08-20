@@ -44,33 +44,14 @@ class SlackController {
   //     }, []) ?? []
   //   );
   // }
-  async onMessage(something: any) {
-    console.log({ something });
-    // try {
-    //   // @ts-ignore
-    //   say(`Idi nahuy! <@${message?.user}>`);
-    // } catch (error) {
-    //   console.log("err");
-    //   console.error(error);
-    // }
+  async onMessage({ say, message }: any) {
+    try {
+      say(`Idi nahuy! <@${message?.user}>`);
+    } catch (error) {
+      console.log("err");
+      console.error(error);
+    }
   }
-  // async onAction(msg: Message) {
-  //   if (!msg) return;
-  //   let {
-  //     text,
-  //     chat: { id: chatId },
-  //   } = msg;
-  //   try {
-  //     await db.connect();
-  //     switch (text) {
-  //       default:
-  //         await this.onMessage(msg);
-  //         return;
-  //     }
-  //   } catch (e) {
-  //     this.sendError(chatId);
-  //   }
-  // }
 }
 
 export default new SlackController();

@@ -9,7 +9,6 @@ slackBot.message(
   SlackController.onMessage.bind(SlackController),
 );
 
-// @ts-ignore
 const handler: Handler = async (event: HandlerEvent) => {
   const payload = JSON.parse(event.body!) as ReceiverEvent;
 
@@ -27,6 +26,10 @@ const handler: Handler = async (event: HandlerEvent) => {
   };
 
   await slackBot.processEvent(slackEvent);
+
+  return {
+    statusCode: 200,
+  };
 };
 
 export { handler };
