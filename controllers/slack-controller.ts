@@ -47,7 +47,7 @@ class SlackController {
   async onMessage({ say, message }: any) {
     console.log({ say, message });
     try {
-      say(`Idi nahuy! <@${message?.user}>`);
+      say(`Idi nahuy!`);
     } catch (error) {
       console.log("err");
       console.error(error);
