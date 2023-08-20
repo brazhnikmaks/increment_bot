@@ -9,9 +9,18 @@ slackBot.message(
   SlackController.onMessage.bind(SlackController),
 );
 
-// @ts-ignore
 const handler: Handler = async (event: HandlerEvent) => {
-  const payload = JSON.parse(event.body!) as ReceiverEvent;
+  const payload = JSON.parse(event.body!) as any;
+
+  // if slack tests url
+  if (payload.challenge) {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        challenge: payload.challenge,
+      }),
+    };
+  }
 
   const slackEvent: ReceiverEvent = {
     body: payload,
@@ -27,6 +36,11 @@ const handler: Handler = async (event: HandlerEvent) => {
   };
 
   await slackBot.processEvent(slackEvent);
+
+  return {
+    statusCode: 200,
+    body: "",
+  };
 };
 
 export { handler };
