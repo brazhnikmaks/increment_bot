@@ -8,7 +8,8 @@ const handler: Handler = async (event: HandlerEvent) => {
 
   // await telegramController.onAction.bind(telegramController)(message);
 
-  return { statusCode: 200 };
+  // @ts-ignore
+  return { statusCode: 200, challenge: event.body?.challenge };
 };
 
 export { handler };
