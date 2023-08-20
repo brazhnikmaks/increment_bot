@@ -5,17 +5,11 @@ import { Handler, HandlerEvent } from "@netlify/functions";
 const handler: Handler = async (event: HandlerEvent) => {
   console.log(event.body);
   const message = JSON.parse(event.body!);
-  console.log(message?.challenge);
+  console.log(message);
 
   // await telegramController.onAction.bind(telegramController)(message);
 
-  // @ts-ignore
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      challenge: message?.challenge,
-    }),
-  };
+  return { statusCode: 200 };
 };
 
 export { handler };
