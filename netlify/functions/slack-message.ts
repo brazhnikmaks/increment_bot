@@ -5,6 +5,9 @@ import { Handler, HandlerEvent } from "@netlify/functions";
 const handler: Handler = async (event: HandlerEvent) => {
   console.log(event.body);
   const message = JSON.parse(event.body!);
+  console.log(message);
+  console.log(message?.challenge);
+  console.log(event.body?.challenge);
 
   // await telegramController.onAction.bind(telegramController)(message);
 
